@@ -20,8 +20,7 @@ export class InMemoryDataService implements
       { id: 19, name: 'Magma' },
       { id: 20, name: 'Tornado' }
      ];
-     console.log('heroes created' + heroes);
-     return (heroes);
+     return {heroes};
    }
    // Overrides the genId method to ensure that a hero always has an id.
    // if the heroes array is empty,

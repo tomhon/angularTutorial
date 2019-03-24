@@ -27,7 +27,7 @@ export class HeroService {
   }
 
   getHeroes(): Observable<Hero[]> {
-    // TODO: send the message _after_ fetching the heroes
+    // // TODO: send the message _after_ fetching the heroes
     // this.messageService.add('HeroService: fetched heroes');
     // return of(HEROES);
     return this.http.get<Hero[]>(this.heroesUrl)
@@ -38,7 +38,7 @@ export class HeroService {
   }
 
   // getHero(id: number): Observable<Hero> {
-  //   // TODO: send the message _after_ fetching the hero
+  // //   TODO: send the message _after_ fetching the hero
   //   this.messageService.add(`HeroService: fetched hero id=${id}`);
   //   return of(HEROES.find(hero => hero.id === id));
   // }
@@ -73,7 +73,7 @@ export class HeroService {
   }
 
 
-  
+
 /** PUT: update the hero on the server */
   updateHero (hero: Hero): Observable<any> {
     return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
@@ -101,6 +101,18 @@ deleteHero (hero: Hero | number): Observable<Hero> {
   );
 }
 
-  
+/* GET heroes whose name contains search term */
+searchHeroes(term: string): Observable<Hero[]> {
+  if (!term.trim()) {
+    // if not search term, return empty hero array.
+    return of([]);
+  }
+  return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+    tap(_ => this.log(`found heroes matching "${term}"`)),
+    catchError(this.handleError<Hero[]>('searchHeroes', []))
+  );
+}
+
+
 
 }
